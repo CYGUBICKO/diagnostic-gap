@@ -51,6 +51,7 @@ varimpfuns.Rout: varimpfuns.R
 ## Data prep
 
 ### Load data
+Sources += data_processing_file.xlsx
 data_processing_file = data_processing_file.xlsx
 load_data.Rout: load_data.R $(data_processing_file) helperfuns.rda
 
