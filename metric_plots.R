@@ -7,7 +7,7 @@ startGraphics()
 ggtheme()
 
 pos <- position_dodge(0.05)
-auc_plot <- (ggplot(auc_df, aes(x=reorder(model, -estimate), y=estimate))
+metric_plot <- (ggplot(metric_df, aes(x=reorder(model, -estimate), y=estimate))
 	+ geom_point(position = pos)
 	+ geom_errorbar(aes(ymin = lower, ymax = upper)
 		, position = pos
@@ -18,5 +18,5 @@ auc_plot <- (ggplot(auc_df, aes(x=reorder(model, -estimate), y=estimate))
 		, x = "Model"
 	)
 )
-print(auc_plot)
+print(metric_plot)
 

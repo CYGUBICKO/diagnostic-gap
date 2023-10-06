@@ -53,18 +53,17 @@ model_params <- data_processing_file$model_params
 #### Exclude sheets which do not need recoding
 vars_recode <- vars_recode[!vars_recode %in% c("data_source", "data_path", "droped_vars", "renamed_vars", "drop_vars", "missing_vals", "ses_vars", "vars_to_numeric", "generated_vars", "outcome_var", "vars_to_relabel", "model_params", "missing_value_category")]
 
-
 if (length(vars_recode)) {
+	recode_files = data_processing_file
 	df <- (df
 		%>% mutate_at(vars_recode, labelall)
 	)
 }
 
 if (length(vars_relabeled)) {
+	recode_files = vars_relabeled
 	df <- (df
-		%>% mutate_at(names(vars_relabeled), function(x){
-			labelall(x=x, file=vars_relabeled)
-		})
+		%>% mutate_at(names(vars_relabeled), labelall)
       %>% mutate_at(names(vars_relabeled), function(x){
          var_name <- rlang::as_label(substitute(x))
          x <- fct_relevel(x, vars_relabeled[[var_name]][["new_label"]])

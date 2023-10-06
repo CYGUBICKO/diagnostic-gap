@@ -12,12 +12,11 @@ vim_session:
 
 Sources += $(wildcard *.Rmd *.md *.R *.bst *.bib)
 Sources += README.md
+autopipeR = defined
 
 ######################################################################
 
 ## Analysis pipeline
-
-autopipeR = defined
 
 ### Linux requirements
 linux_requirements:
@@ -55,8 +54,15 @@ Sources += data_processing_file.xlsx
 data_processing_file = data_processing_file.xlsx
 load_data.Rout: load_data.R $(data_processing_file) helperfuns.rda
 
+### Create project directory
+project_name = $(shell Rscript -e "cat(readxl::read_excel(\"$(data_processing_file)\", sheet=\"model_params\")[[\"project_name\"]])")
+
+create_project_dir.out: $(data_processing_file)
+	(mkdir $(project_name) 2>/dev/null) || (echo "project directory alreach exists")
+	touch $@
+
 ### Data cleaning
-cleaning.Rout: cleaning.R load_data.rda
+cleaning.Rout: cleaning.R load_data.rda create_project_dir.out
 
 ### Generate SES based on PCA
 ses_pca.Rout: ses_pca.R cleaning.rda
@@ -64,7 +70,7 @@ ses_pca_plot.Rout: ses_pca_plot.R ses_pca.rda
 
 ### Descriptive stats
 descriptive_stats.Rout: descriptive_stats.R descplotsfuns.rda ses_pca_plot.rda
-outputs += descriptive_stats.Rout.pdf.op
+outputs += descriptive_stats.Rout.pdf
 
 ######################################################################
 
@@ -139,30 +145,30 @@ trained_models += mlp_train.rda
 ## Predictive performance
 resamples_test_data.Rout: resamples_test_data.R bootfuns.rda $(trained_models)
 
-### AUC plots
-auc_plots.Rout: auc_plots.R resamples_test_data.rda descplotsfuns.rda
-outputs += auc_plots.Rout.pdf.op
+### Metric plots
+metric_plots.Rout: metric_plots.R resamples_test_data.rda descplotsfuns.rda
+outputs += metric_plots.Rout.pdf
 
 ### ROC plots
 roc_plots.Rout: roc_plots.R resamples_test_data.rda descplotsfuns.rda
-outputs += roc_plots.Rout.pdf.op
+outputs += roc_plots.Rout.pdf
 
 ### Best performing model
 best_model.Rout: best_model.R resamples_test_data.rda
 
 varimp_best.Rout: varimp_best.R varimpfuns.rda $(trained_models)
 varimp_plots.Rout: varimp_plots.R best_model.rda descplotsfuns.rda varimp_best.rda
-outputs += varimp_plots.Rout.pdf.op
+outputs += varimp_plots.Rout.pdf
 
 ### Rank variable importance
 varimp_rank.Rout: varimp_rank.R varimp_best.rda
 varimp_rank_plots.Rout: varimp_rank_plots.R varimp_rank.rda
-outputs += varimp_rank_plots.Rout.pdf.op
+outputs += varimp_rank_plots.Rout.pdf
 
 ######################################################################
 
 cp_op: $(outputs)
-	$(MAKE) $^
+	$(MAKE) $^ && cp -r $^ $(project_name)
 
 ######################################################################
 

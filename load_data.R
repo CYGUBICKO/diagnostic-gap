@@ -37,11 +37,11 @@ if (data_source == "google_drive") {
 }
 
 ## Add other file types here
-if (file_type == "dta") {
+if (file_type == "dta" | grepl("dta", file_type)) {
 	df = haven::read_dta(data_path)
-} else if (file_type == "csv") {
+} else if (file_type == "csv" | grepl("csv", file_type)) {
 	df = readr::read_csv(data_path)
-} else if (file_type == "xlsx") {
+} else if (file_type == "xlsx" | grepl("xlsx", file_type)) {
 	df = readxl::read_excel(data_path)
 }
 

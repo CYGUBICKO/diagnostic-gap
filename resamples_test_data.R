@@ -14,25 +14,28 @@ nreps <- 200
 scores <- sapply(ls(pattern = "_train$"), function(x){
 	modname <- gsub("\\_train", "", x)
 	x <- get(x)
-	out <- bootEstimates(df=test_df, outcome_var=outcome_var, model=x, nreps=nreps, report=report_metric)
+	out <- bootEstimates(df=test_df, outcome_var=outcome_var, problem_type=problem_type, model=x, nreps=nreps, report=report_metric)
 	out$specifics$model <- modname
 	out$all$model <- modname
 	out$roc_df$model <- modname
 	return(out)
 }, simplify=FALSE)
-
-
 scores <- do.call("rbind", scores)
-auc_df <- do.call("rbind", scores[, "specifics"])
-roc_df <- do.call("rbind", scores[, "roc_df"])
-metrics_df <- do.call("rbind", scores[, "all"])
-positive_class <- do.call("rbind", scores[, "positive_cat"])
+metric_df <- do.call("rbind", scores[, "specifics"])
+all_metrics_df <- do.call("rbind", scores[, "all"])
 
-auc_df
+if (problem_type=="classification") {
+	roc_df <- do.call("rbind", scores[, "roc_df"])
+	positive_class <- do.call("rbind", scores[, "positive_cat"])
+} else if (problem_type=="regression") {
+	roc_df <- NULL 
+	positive_class <- NULL 
+}
 
-saveVars(auc_df
+saveVars(metric_df
 	, roc_df
-	, metrics_df
+	, all_metrics_df
 	, positive_class
 	, report_metric
+	, problem_type
 )

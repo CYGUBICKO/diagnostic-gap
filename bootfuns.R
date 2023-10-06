@@ -1,43 +1,55 @@
 library(shellpipes)
 
 #### ---- Prediction uncertainities ----
-bootMeasures <- function(df, model, outcome_var){
+bootMeasures <- function(df, model, outcome_var, problem_type){
 	x_df <- df[, colnames(df)[!colnames(df) %in% outcome_var]]
 	y <- df[, outcome_var, drop=TRUE]
-	preds <- predict(model, x_df, type = "prob")
-	preds$pred <- factor(apply(preds, 1, function(x)colnames(preds)[which.max(x)]), levels=levels(y))
-	preds$obs <- y
-	ss <- twoClassSummary(preds, lev = levels(preds$obs))
-	pp <- prSummary(preds, lev = levels(preds$obs))
-	aa <- confusionMatrix(preds$pred, preds$obs)$overall[["Accuracy"]]
-	scores_df <- data.frame(Accuracy = aa
-		, AUCROC = ss[["ROC"]]
-		, AUCRecall = pp[["AUC"]]
-		, Sens = ss[["Sens"]]
-		, Spec = ss[["Spec"]]
-		, Precision = pp[["Precision"]]
-		, Recall = pp[["Recall"]]
-		, "F" = pp[["F"]]
-	)
+	
+	if (problem_type=="classification") {
+		preds <- predict(model, x_df, type = "prob")
+		preds$pred <- factor(apply(preds, 1, function(x)colnames(preds)[which.max(x)]), levels=levels(y))
+		preds$obs <- y
+		ss <- twoClassSummary(preds, lev = levels(preds$obs))
+		pp <- prSummary(preds, lev = levels(preds$obs))
+		aa <- confusionMatrix(preds$pred, preds$obs)$overall[["Accuracy"]]
+		scores_df <- data.frame(Accuracy = aa
+			, AUCROC = ss[["ROC"]]
+			, AUCRecall = pp[["AUC"]]
+			, Sens = ss[["Sens"]]
+			, Spec = ss[["Spec"]]
+			, Precision = pp[["Precision"]]
+			, Recall = pp[["Recall"]]
+			, "F" = pp[["F"]]
+		)
 
-	## ROCs
-	base_lev <- levels(preds$pred)[1]
-	rocr_pred <- prediction(preds[[base_lev]]
-		, preds$obs
-	)
-	model_roc <- performance(rocr_pred, "tpr", "fpr")
-   roc_df <- data.frame(x = model_roc@x.values[[1]], y = model_roc@y.values[[1]])
+		## ROCs
+		base_lev <- levels(preds$pred)[1]
+		rocr_pred <- prediction(preds[[base_lev]]
+			, preds$obs
+		)
+		model_roc <- performance(rocr_pred, "tpr", "fpr")
+		roc_df <- data.frame(x = model_roc@x.values[[1]], y = model_roc@y.values[[1]])
+	} else if (problem_type=="regression") {
+		preds <- predict(model, x_df)
+		scores_df = data.frame(as.list(postResample(pred = preds, obs = y)))
+		roc_df = NULL
+		base_lev = NULL
+	}
 	return(list(scores_df=scores_df, roc_df=roc_df, positive_cat = base_lev))
 }
 
-bootEstimates <- function(df, model, outcome_var, nreps = 500, report = c("Accuracy", "AUCROC", "AUCRecall", "Sens", "Spec", "Precision", "Recall", "F")) {
-	all <- c("Accuracy", "AUCROC", "AUCRecall", "Sens", "Spec", "Precision", "Recall", "F") 
+bootEstimates <- function(df, model, outcome_var, nreps = 500, problem_type, report = c("Accuracy", "AUCROC", "AUCRecall", "Sens", "Spec", "Precision", "Recall", "F", "RMSE", "Rsquared", "MAE")) {
+	if (problem_type=="classification") {
+		all <- c("Accuracy", "AUCROC", "AUCRecall", "Sens", "Spec", "Precision", "Recall", "F") 
+	} else if (problem_type=="regression") {
+		all <- c("RMSE", "Rsquared", "MAE") 
+	}
 	if (!any(all %in% report)) {
 		stop(c("The report options are ", paste0(all, collapse=", ")))
 	}
 	resamples <- createResample(1:nrow(df), times = nreps, list = TRUE)
 	est <- lapply(resamples, function(x){
-		bootMeasures(df[x, ], model, outcome_var)$scores_df
+		bootMeasures(df[x, ], model, outcome_var, problem_type)$scores_df
 	})
 	out <- do.call(rbind, est)
 	out <- sapply(out, function(x){quantile(x, c(0.025, 0.5, 0.975))})
@@ -53,7 +65,7 @@ bootEstimates <- function(df, model, outcome_var, nreps = 500, report = c("Accur
 	out <- list(out_metric, out)
 	names(out) <- c("specifics", "all")
 	## Generate ROC
-	roc <- bootMeasures(df, model, outcome_var)
+	roc <- bootMeasures(df, model, outcome_var, problem_type)
 	roc_df <- roc$roc_df
 	out$roc_df <- roc_df
 	positive_cat <- roc$positive_cat

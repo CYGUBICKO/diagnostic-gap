@@ -21,4 +21,5 @@ saveVars(lasso_train
 	, train_df
 	, outcome_var
 	, report_metric
+	, problem_type
 )

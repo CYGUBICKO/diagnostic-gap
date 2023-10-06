@@ -6,7 +6,6 @@ loadEnvironments()
 
 set.seed(seed)
 
-performance_metric
 ols_train <- train(model_form
 	, data = train_df
 	, method = ifelse(problem_type=="classification", "glm", "lm")
@@ -21,4 +20,5 @@ saveVars(ols_train
 	, test_df
 	, outcome_var
 	, report_metric
+	, problem_type
 )

@@ -4,7 +4,7 @@ library(dplyr)
 loadEnvironments()
 
 top_n <- 2
-best_df <- (auc_df
+best_df <- (metric_df
 	%>% arrange(desc(estimate))
 	%>% mutate(.n = 1:n())
 	%>% filter(.n <= top_n)

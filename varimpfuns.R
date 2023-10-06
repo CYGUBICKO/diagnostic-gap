@@ -10,13 +10,18 @@ vimp_model <- function(object, ...) {
 }
 
 
-vimp_perm <- function(model, newdata, nrep = 20, estimate = c("mean", "quantile"), parallelize = TRUE, outcome_var, nclusters = parallel::detectCores(), ...){
+vimp_perm <- function(model, newdata, nrep = 20, estimate = c("mean", "quantile"), parallelize = TRUE, outcome_var, problem_type, nclusters = parallel::detectCores(), ...){
 
 	estimate <- match.arg(estimate)
 	# Overall score
 	xvars <- colnames(newdata)[!colnames(newdata) %in% outcome_var]
 	y <- newdata[, outcome_var, drop=TRUE]
-	overall_c <- confusionMatrix(predict(model, newdata, type="raw"), y)$overall[["Accuracy"]]
+
+	if (problem_type=="classification") {
+		overall_c <- confusionMatrix(predict(model, newdata, type="raw"), y)$overall[["Accuracy"]]
+	} else if (problem_type=="regression") {
+		overall_c <- postResample(pred=predict(model, newdata), obs=y)[["RMSE"]]
+	}
 	N <- NROW(newdata)
 	newdata <- newdata[, xvars, drop=FALSE]
 
@@ -43,10 +48,17 @@ vimp_perm <- function(model, newdata, nrep = 20, estimate = c("mean", "quantile"
 			}
 			index <- rep(1:nrep, each = N)
 			permute_df[, x] <- permute_var
-			pred <- predict(model, newdata = permute_df, type = "raw")
-			perm_c <- tapply(pred, index, function(r){
-				confusionMatrix(r, y)$overall[["Accuracy"]]
-			})
+			if (problem_type=="classification") {
+				pred <- predict(model, newdata = permute_df, type = "raw")
+				perm_c <- tapply(pred, index, function(r){
+					confusionMatrix(r, y)$overall[["Accuracy"]]
+				})
+			} else if (problem_type=="regression") {
+				pred <- predict(model, newdata = permute_df)
+				perm_c <- tapply(pred, index, function(r){
+					postResample(pred=r, obs=y)[["RMSE"]]
+				})
+			}
 			if (estimate=="mean") {
 				est <- mean((overall_c - perm_c)/overall_c)
 				names(est) <- x
@@ -71,10 +83,17 @@ vimp_perm <- function(model, newdata, nrep = 20, estimate = c("mean", "quantile"
 			}
 			index <- rep(1:nrep, each = N)
 			permute_df[, x] <- permute_var
-			pred <- predict(model, newdata = permute_df, type = "raw")
-			perm_c <- tapply(pred, index, function(r){
-				confusionMatrix(r, y)$overall[["Accuracy"]]
-			})
+			if (problem_type=="classification") {
+				pred <- predict(model, newdata = permute_df, type = "raw")
+				perm_c <- tapply(pred, index, function(r){
+					confusionMatrix(r, y)$overall[["Accuracy"]]
+				})
+			} else if (problem_type=="regression") {
+				pred <- predict(model, newdata = permute_df)
+				perm_c <- tapply(pred, index, function(r){
+					postResample(pred=r, obs=y)[["RMSE"]]
+				})
+			}
 			if (estimate=="mean") {
 				est <- mean((overall_c - perm_c)/overall_c)
 			} else {
@@ -95,10 +114,10 @@ vimp_perm <- function(model, newdata, nrep = 20, estimate = c("mean", "quantile"
 	return(vi)
 }
 
-get_vimp <- function(model, type = c("model", "perm"), estimate=c("mean", "quantile"), relative=TRUE, newdata, nrep = 20, modelname="model", parallelize = TRUE, nclusters = parallel::detectCores(), ...){
+get_vimp <- function(model, type = c("model", "perm"), estimate=c("mean", "quantile"), relative=TRUE, newdata, nrep = 20, modelname="model", parallelize = TRUE, outcome_var, problem_type, nclusters = parallel::detectCores(), ...){
 	type <- match.arg(type)
 	if (type == "perm") {
-		out <- vimp_perm(model, newdata, nrep, estimate=estimate, parallelize = parallelize, nclusters = nclusters, ...)
+		out <- vimp_perm(model, newdata, nrep, estimate=estimate, parallelize = parallelize, outcome_var=outcome_var, problem_type=problem_type, nclusters = nclusters, ...)
 		if (estimate=="mean") {
 			out <- data.frame(Overall = out)
 			out$terms <- rownames(out)

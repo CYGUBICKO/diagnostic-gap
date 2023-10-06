@@ -14,7 +14,7 @@ na_codes <- function(x, ...) {
 labelsfun <- function(file, var) {
   all_labs <- file[[var]]
   labs <- as.character(all_labs$old_label)
-  names(labs) <- all_labs$new_label
+  names(labs) <- as.character(all_labs$new_label)
   return(labs)
 }
 
@@ -22,7 +22,7 @@ labelsfun <- function(file, var) {
 labelall <- function(x, file=NULL) {
   var_name <- rlang::as_label(substitute(x))
   if (is.null(file)) file <- recode_files
-  x <- fct_recode(as.factor(x), !!!labelsfun(var=var_name, file=file))
+  x <- fct_recode(as.factor(as.character(x)), !!!labelsfun(var=var_name, file=file))
   x <- fct_drop(x)
   return(x)
 }

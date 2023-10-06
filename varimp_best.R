@@ -16,6 +16,7 @@ varimp_df <- sapply(ls(pattern = "_train$"), function(x){
 		, type="perm"
 		, newdata=train_df
 		, outcome_var = outcome_var
+		, problem_type=problem_type
 		, estimate = "quantile"
 		, nrep=nreps
 		, modelname=modname
