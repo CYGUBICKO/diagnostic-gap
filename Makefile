@@ -57,6 +57,7 @@ load_data.Rout: load_data.R $(data_processing_file) helperfuns.rda
 ### Create project directory
 project_name = $(shell Rscript -e "cat(readxl::read_excel(\"$(data_processing_file)\", sheet=\"model_params\")[[\"project_name\"]])")
 
+Ignore += create_project_dir.out
 create_project_dir.out: $(data_processing_file)
 	(mkdir $(project_name) 2>/dev/null) || (echo "project directory alreach exists")
 	touch $@
@@ -148,10 +149,13 @@ resamples_test_data.Rout: resamples_test_data.R bootfuns.rda $(trained_models)
 ### Metric plots
 metric_plots.Rout: metric_plots.R resamples_test_data.rda descplotsfuns.rda
 outputs += metric_plots.Rout.pdf
+outputs += metric_plots.Rout.csv
+outputs += all_metric_plots.Rout.csv
 
 ### ROC plots
 roc_plots.Rout: roc_plots.R resamples_test_data.rda descplotsfuns.rda
 outputs += roc_plots.Rout.pdf
+outputs += roc_plots.Rout.csv
 
 ### Best performing model
 best_model.Rout: best_model.R resamples_test_data.rda
@@ -159,11 +163,13 @@ best_model.Rout: best_model.R resamples_test_data.rda
 varimp_best.Rout: varimp_best.R varimpfuns.rda $(trained_models)
 varimp_plots.Rout: varimp_plots.R best_model.rda descplotsfuns.rda varimp_best.rda
 outputs += varimp_plots.Rout.pdf
+outputs += varimp_plots.Rout.csv
 
 ### Rank variable importance
 varimp_rank.Rout: varimp_rank.R varimp_best.rda
 varimp_rank_plots.Rout: varimp_rank_plots.R varimp_rank.rda
 outputs += varimp_rank_plots.Rout.pdf
+outputs += varimp_rank_plots.Rout.csv
 
 ######################################################################
 

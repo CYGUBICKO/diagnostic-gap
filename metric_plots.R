@@ -19,4 +19,5 @@ metric_plot <- (ggplot(metric_df, aes(x=reorder(model, -estimate), y=estimate))
 	)
 )
 print(metric_plot)
-
+csvSave(metric_df)
+csvSave(all_metrics_df, target = paste0("all_", targetname()))

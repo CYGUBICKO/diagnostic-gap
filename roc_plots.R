@@ -33,4 +33,7 @@ if (problem_type=="classification") {
 		+ theme(legend.position="right")
 	)
 	print(roc_plot)
+	csvSave(roc_df)
+} else {
+	csvSave(data.frame())
 }
