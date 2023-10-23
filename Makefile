@@ -171,6 +171,12 @@ varimp_rank_plots.Rout: varimp_rank_plots.R varimp_rank.rda
 outputs += varimp_rank_plots.Rout.pdf
 outputs += varimp_rank_plots.Rout.csv
 
+### Prediction
+Sources += prediction_template.csv
+prediction_template = prediction_template.csv
+prediction.Rout: prediction.R $(prediction_template) $(trained_models)
+outputs += prediction.Rout.csv
+
 ######################################################################
 
 cp_op: $(outputs)

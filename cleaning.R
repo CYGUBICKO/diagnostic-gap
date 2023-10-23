@@ -100,6 +100,9 @@ if (length(vars_droped)) {
 	)
 }
 
+#### Create prediction template
+readr::write_csv(sample_n(df, 1), file="prediction_template.csv")
+
 saveVars(df
 	, model_params
 	, vars_renamed_df

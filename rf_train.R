@@ -9,7 +9,7 @@ rf_train <- train(model_form
 	, data = train_df
 	, method = "ranger"
 	, metric = performance_metric
-#	, tuneGrid = rf_tunegrid
+	, tuneGrid = rf_tunegrid
 	, trControl = training_control
 	, num.trees = num.trees
 	, importance = 'permutation'

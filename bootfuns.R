@@ -52,7 +52,7 @@ bootEstimates <- function(df, model, outcome_var, nreps = 500, problem_type, rep
 		bootMeasures(df[x, ], model, outcome_var, problem_type)$scores_df
 	})
 	out <- do.call(rbind, est)
-	out <- sapply(out, function(x){quantile(x, c(0.025, 0.5, 0.975))})
+	out <- sapply(out, function(x){quantile(x, c(0.025, 0.5, 0.975), na.rm=TRUE)})
 	out_metric <- out[, report, drop = FALSE]
 	out_metric <- t(out_metric)
 	colnames(out_metric) <- c("lower", "estimate", "upper")
