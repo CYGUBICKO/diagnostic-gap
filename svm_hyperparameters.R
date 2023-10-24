@@ -2,11 +2,15 @@ library(shellpipes)
 
 loadEnvironments()
 
-svm_param <- models_hyperparameters$svm
-C <- svm_param$C
-svm_tunegrid <- expand.grid(
-	C = seqx(C)
-)
+if (default_params) {
+	svm_tunegrid <- NULL
+} else {
+	svm_param <- models_hyperparameters$svm
+	C <- svm_param$C
+	svm_tunegrid <- expand.grid(
+		C = seqx(C)
+	)
+}
 
 saveVars(svm_tunegrid
 	, performance_metric

@@ -2,13 +2,17 @@ library(shellpipes)
 
 loadEnvironments()
 
-ridge_param <- models_hyperparameters$ridge
-alpha <- ridge_param$alpha
-lambda <- ridge_param$lambda
-ridge_tunegrid <- expand.grid(
-	.alpha = alpha
-	, .lambda = exp(seq(lambda[1], lambda[2], length.out=lambda[3]))
-)
+if (default_params) {
+	ridge_tunegrid <- NULL
+} else {
+	ridge_param <- models_hyperparameters$ridge
+	alpha <- ridge_param$alpha
+	lambda <- ridge_param$lambda
+	ridge_tunegrid <- expand.grid(
+		.alpha = alpha
+		, .lambda = exp(seq(lambda[1], lambda[2], length.out=lambda[3]))
+	)
+}
 
 saveVars(ridge_tunegrid
 	, performance_metric

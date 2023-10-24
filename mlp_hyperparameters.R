@@ -3,18 +3,22 @@ library(dplyr)
 
 loadEnvironments()
 
-mlp_param <- models_hyperparameters$mlp
-layer1 <- mlp_param$layer1
-layer2 <- mlp_param$layer2
-layer3 <- mlp_param$layer3
-decay <- mlp_param$decay
+if (default_params) {
+	mlp_tunegrid <- NULL
+} else {
+	mlp_param <- models_hyperparameters$mlp
+	layer1 <- mlp_param$layer1
+	layer2 <- mlp_param$layer2
+	layer3 <- mlp_param$layer3
+	decay <- mlp_param$decay
 
-mlp_tunegrid <- expand.grid(
-	layer1 = c(0, seqx(layer1))
-	, layer2 = seqx(layer2)
-	, layer3 = seqx(layer3)
-	, decay = decay
-)
+	mlp_tunegrid <- expand.grid(
+		layer1 = c(0, seqx(layer1))
+		, layer2 = seqx(layer2)
+		, layer3 = seqx(layer3)
+		, decay = decay
+	)
+}
 
 saveVars(mlp_tunegrid
 	, performance_metric

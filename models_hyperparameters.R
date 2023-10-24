@@ -11,8 +11,10 @@ models_hyperparameters <- sapply(sheets, function(x){
 }, simplify = FALSE)
 
 models_hyperparameters <- get_excel_param_all(models_hyperparameters)
+default_params <- as.logical(models_hyperparameters$default)
 
-saveVars(models_hyperparameters
+saveVars(default_params
+	, models_hyperparameters
 	, training_control
 	, problem_type
 	, performance_metric

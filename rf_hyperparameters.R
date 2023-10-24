@@ -3,16 +3,21 @@ library(shellpipes)
 loadEnvironments()
 
 rf_param <- models_hyperparameters$rf
-mtry <- rf_param$mtry
 num.trees <- rf_param$num.trees
-min.node.size <- rf_param$min.node.size
-splitrule <- rf_param$splitrule
 regularization.factor <- rf_param$regularization.factor
-rf_tunegrid <- expand.grid(
-	mtry = floor(seq(mtry[1], mtry[2], length.out=mtry[3]))
-	, splitrule = splitrule
-	, min.node.size = min.node.size
-)
+
+if (default_params) {
+	rf_tunegrid <- NULL
+} else {
+	mtry <- rf_param$mtry
+	min.node.size <- rf_param$min.node.size
+	splitrule <- rf_param$splitrule
+	rf_tunegrid <- expand.grid(
+		mtry = floor(seq(mtry[1], mtry[2], length.out=mtry[3]))
+		, splitrule = splitrule
+		, min.node.size = min.node.size
+	)
+}
 
 saveVars(rf_tunegrid
 	, num.trees

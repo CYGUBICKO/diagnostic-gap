@@ -2,13 +2,17 @@ library(shellpipes)
 
 loadEnvironments()
 
-enet_param <- models_hyperparameters$enet
-alpha <- enet_param$alpha
-lambda <- enet_param$lambda
-enet_tunegrid <- expand.grid(
-	.alpha = seq(alpha[1], alpha[2], length.out=alpha[3])
-	, .lambda = exp(seq(lambda[1], lambda[2], length.out=lambda[3]))
-)
+if (default_params) {
+	enet_tunegrid <- NULL
+} else {
+	enet_param <- models_hyperparameters$enet
+	alpha <- enet_param$alpha
+	lambda <- enet_param$lambda
+	enet_tunegrid <- expand.grid(
+		.alpha = seq(alpha[1], alpha[2], length.out=alpha[3])
+		, .lambda = exp(seq(lambda[1], lambda[2], length.out=lambda[3]))
+	)
+}
 
 
 saveVars(enet_tunegrid

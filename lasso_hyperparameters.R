@@ -2,13 +2,17 @@ library(shellpipes)
 
 loadEnvironments()
 
-lasso_param <- models_hyperparameters$lasso
-alpha <- lasso_param$alpha
-lambda <- lasso_param$lambda
-lasso_tunegrid <- expand.grid(
-	.alpha = alpha
-	, .lambda = exp(seq(lambda[1], lambda[2], length.out=lambda[3]))
-)
+if (default_params) {
+	lasso_tunegrid <- NULL
+} else {
+	lasso_param <- models_hyperparameters$lasso
+	alpha <- lasso_param$alpha
+	lambda <- lasso_param$lambda
+	lasso_tunegrid <- expand.grid(
+		.alpha = alpha
+		, .lambda = exp(seq(lambda[1], lambda[2], length.out=lambda[3]))
+	)
+}
 
 saveVars(lasso_tunegrid
 	, performance_metric
