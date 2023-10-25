@@ -10,10 +10,11 @@ vim_session:
 
 ######################################################################
 
-Sources += $(wildcard *.Rmd *.md *.R *.bst *.bib)
+Sources += $(wildcard *.Rmd *.md *.R *.bst *.bib *.py)
 Sources += README.md
 autopipeR = defined
 
+Ignore += api_config.ini
 ######################################################################
 
 ## Analysis pipeline
@@ -21,6 +22,14 @@ autopipeR = defined
 ### Linux requirements
 linux_requirements:
 	sudo apt install cmake
+	sudo apt install pip
+	echo "alias python='/bin/python3'" >> ~/.bash_aliases 
+	bash -c "source ~/.bash_aliases"
+	pip install -q google-generativeai
+
+### Run python script
+%.Pyout: %.py
+	python3 -u $(filter %.py, $^) > $@
 
 ### Install required packages
 requirements.Rout: requirements.R
@@ -177,7 +186,16 @@ prediction_template = prediction_template.csv
 prediction.Rout: prediction.R $(prediction_template) $(trained_models)
 outputs += prediction.Rout.csv
 
+#### Gather results for the GAI
+results_forgai.Rout: results_forgai.R
+
 ######################################################################
+
+## Reports
+### Use Google GAI to draft a manuscript based on the results
+generate_report.Pyout: generate_report.py results_forgai.Rout
+draft_report.pdf: draft_report.Rmd generate_report.Pyout
+	$(knitpdf)
 
 cp_op: $(outputs)
 	$(MAKE) $^ && cp -r $^ $(project_name)

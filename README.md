@@ -8,6 +8,23 @@ This repo uses the power of `make` to provide an En-to-End workflow for implemen
 - **Linux** or **Mac**
 - For **Windows**, you can use Windows Subsystem for Linux (WSL) by following the steps outlined in [wsl-setup](https://github.com/CYGUBICKO/wsl-setup).
 
+### Setup
+
+For fresh installation, run (from terminal):
+
+```
+make linux_requirements
+```
+
+For automatic draft manuscript generation, the pipeline uses [Google Generate AI API](https://developers.generativeai.google/tutorials/text_quickstart). You'll need to create [Google API KEY](https://developers.generativeai.google/tutorials/setup) and then create configuration file `api_config.ini` with the content:
+
+```
+[GAI]
+api_key = YOUR KEY HERE
+
+```
+
+
 ### Usage
 
 - Open and update Excel files 
@@ -24,6 +41,6 @@ This repo uses the power of `make` to provide an En-to-End workflow for implemen
 	- To generate a plot ranking all the variables, run:
 		- `make varimp_rank_plots.Rout.pdf`
 
-- You can also generate all the required outputs and save them automatically in the `outputs` folder, which is automatically added to git, by:
+- You can also generate all the required outputs and save them automatically in the `project_name` folder (set in data_processing_files.xlsx), which is automatically added to git, by:
 	- `make cp_op`
 

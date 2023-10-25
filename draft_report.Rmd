@@ -1,0 +1,4 @@
+```{r echo = FALSE, results="asis"}
+cat(readLines('generate_report.Pyout'), sep = '\n')
+```
+
