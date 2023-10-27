@@ -18,10 +18,13 @@ rf_train <- train(model_form
 	, save.memory=TRUE
 )
 print(rf_train)
+model_name_ = "Random forest"
+rf_train$model_name_ = model_name_
 
 saveVars(rf_train
 	, test_df
 	, train_df
 	, outcome_var
 	, problem_type
+	, preprocess_steps
 )

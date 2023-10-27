@@ -36,4 +36,6 @@ saveVars(train_recipe
 	, na_codes
 	, preprocessFun
 	, seqx
+	, train_test_ratio
+	, project_description
 )

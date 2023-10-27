@@ -15,6 +15,8 @@ enet_train <- train(model_form
 	, trControl = training_control
 )
 enet_train
+model_name_ = "Elastic net"
+enet_train$model_name_ = model_name_
 
 saveVars(enet_train
 	, test_df
@@ -22,4 +24,5 @@ saveVars(enet_train
 	, outcome_var
 	, report_metric
 	, problem_type
+	, preprocess_steps
 )

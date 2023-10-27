@@ -50,8 +50,12 @@ vars_recode <- names(data_processing_file)
 ### Model params
 model_params <- data_processing_file$model_params
 
+### Project description
+project_description = data_processing_file$project_description
+project_description = paste0("Assume you are expert in application of AI/ML in ", project_description$subject_area, ". Given the following details about an ML/AI task, for a study that was conducted in ", project_description$study_area, " between the period ", project_description$study_period, ". ", project_description$study_objective, ".")
+
 #### Exclude sheets which do not need recoding
-vars_recode <- vars_recode[!vars_recode %in% c("data_source", "data_path", "droped_vars", "renamed_vars", "drop_vars", "missing_vals", "ses_vars", "vars_to_numeric", "generated_vars", "outcome_var", "vars_to_relabel", "model_params", "missing_value_category")]
+vars_recode <- vars_recode[!vars_recode %in% c("data_source", "data_path", "droped_vars", "renamed_vars", "drop_vars", "missing_vals", "ses_vars", "vars_to_numeric", "generated_vars", "outcome_var", "vars_to_relabel", "model_params", "missing_value_category", "project_description")]
 
 if (length(vars_recode)) {
 	recode_files = data_processing_file
@@ -103,6 +107,7 @@ if (length(vars_droped)) {
 #### Create prediction template
 readr::write_csv(sample_n(df, 1), file="prediction_template.csv")
 
+
 saveVars(df
 	, model_params
 	, vars_renamed_df
@@ -119,4 +124,5 @@ saveVars(df
 	, na_codes
 	, preprocessFun
 	, seqx
+	, project_description
 )

@@ -10,8 +10,8 @@ loadEnvironments()
 
 nreps <- 100
 varimp_df <- sapply(ls(pattern = "_train$"), function(x){
-	modname <- gsub("\\_train", "", x)
 	x <- get(x)
+	modname <- x$model_name_
 	out <- get_vimp(x
 		, type="perm"
 		, newdata=train_df
@@ -29,4 +29,5 @@ varimp_all_df <- do.call("rbind", varimp_df)
 
 saveVars(varimp_all_df
 	, plot.varimp
+	, nreps
 )

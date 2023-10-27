@@ -102,4 +102,5 @@ saveVars(outcome_var
 	, na_codes
 	, preprocessFun
 	, seqx
+	, project_description
 )

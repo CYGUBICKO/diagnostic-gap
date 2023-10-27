@@ -1,3 +1,4 @@
+import pprint
 import configparser
 import google.generativeai as palm
 
@@ -15,9 +16,9 @@ prompt = open("results_forgai.Rout.txt", 'r').read()
 completion = palm.generate_text(
     model=model,
     prompt=prompt,
-    temperature=0,
+    temperature=0.5,
     # The maximum length of the response
-    max_output_tokens=6000,
+    max_output_tokens=100000,
 )
 
 print(completion.result)

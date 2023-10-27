@@ -15,6 +15,8 @@ ridge_train <- train(model_form
 	, trControl = training_control
 )
 ridge_train
+model_name_ = "Ridge"
+ridge_train$model_name_ = model_name_
 
 saveVars(ridge_train
 	, test_df
@@ -22,4 +24,5 @@ saveVars(ridge_train
 	, outcome_var
 	, report_metric
 	, problem_type
+	, preprocess_steps
 )

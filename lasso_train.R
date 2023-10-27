@@ -15,6 +15,8 @@ lasso_train <- train(model_form
 	, trControl = training_control
 )
 lasso_train
+model_name_ = "Lasso"
+lasso_train$model_name_ = model_name_
 
 saveVars(lasso_train
 	, test_df
@@ -22,4 +24,5 @@ saveVars(lasso_train
 	, outcome_var
 	, report_metric
 	, problem_type
+	, preprocess_steps
 )

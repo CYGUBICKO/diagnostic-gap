@@ -17,6 +17,8 @@ xgbm_train <- train(model_form
 	, alpha = alpha
 )
 xgbm_train
+model_name_ = "Extreem gradient boosting"
+xgbm_train$model_name_ = model_name_
 
 saveVars(xgbm_train
 	, test_df
@@ -24,4 +26,5 @@ saveVars(xgbm_train
 	, outcome_var
 	, report_metric
 	, problem_type
+	, preprocess_steps
 )

@@ -68,7 +68,7 @@ project_name = $(shell Rscript -e "cat(readxl::read_excel(\"$(data_processing_fi
 
 Ignore += create_project_dir.out
 create_project_dir.out: $(data_processing_file)
-	(mkdir $(project_name) 2>/dev/null) || (echo "project directory alreach exists")
+	(mkdir output_$(project_name) 2>/dev/null) || (echo "project directory alreach exists")
 	touch $@
 
 ### Data cleaning
@@ -187,7 +187,7 @@ prediction.Rout: prediction.R $(prediction_template) $(trained_models)
 outputs += prediction.Rout.csv
 
 #### Gather results for the GAI
-results_forgai.Rout: results_forgai.R
+results_forgai.Rout: results_forgai.R varimp_plots.rda
 
 ######################################################################
 

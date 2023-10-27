@@ -46,4 +46,5 @@ saveVars(model_form
 	, na_codes
 	, preprocessFun
 	, seqx
+	, project_description
 )

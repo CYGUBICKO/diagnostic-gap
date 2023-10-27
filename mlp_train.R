@@ -14,6 +14,8 @@ mlp_train <- train(model_form
 	, trControl = training_control
 )
 mlp_train
+model_name_ = "Multi-layer neural network"
+mlp_train$model_name_ = model_name_
 
 saveVars(mlp_train
 	, test_df

@@ -41,4 +41,5 @@ saveVars(gbm_tunegrid
 	, na_codes
 	, preprocessFun
 	, seqx
+	, preprocess_steps
 )

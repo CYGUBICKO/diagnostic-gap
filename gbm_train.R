@@ -15,6 +15,8 @@ gbm_train <- train(model_form
 	, trControl = training_control
 )
 gbm_train
+model_name_ = "Gradient boosting"
+gbm_train$model_name_ = model_name_
 
 saveVars(gbm_train
 	, test_df
@@ -22,4 +24,5 @@ saveVars(gbm_train
 	, outcome_var
 	, report_metric
 	, problem_type
+	, preprocess_steps
 )

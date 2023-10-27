@@ -1,5 +1,12 @@
 library(shellpipes)
+loadEnvironments()
 
-prompt = "You are an expert in application of machine learning in public health. Also include abstract, limitations and reference sections and explam all the models and performance metrics used in the analysis. Help me write a detailed manuscript give the following. I trained a model to predict heart disease in nairobi. The model accuracy was 0.98 for random forest, 0.7 for lasso, and 0.8 for elastic net. Top 3 variables selected by best performing models was x1, xr and yy."
+project = preprocess_steps$project_description
+preprocess_steps$project_description = NULL
+info = paste0(c(project, preprocess_steps), collapse = " ")
+end = "Help me write a draft manuscript to be submitted to a scientific journal. Include the following sections: Abstract, Introduction, Methods, Results, Discussion, Limitations, Explanation about the performance metrics, and References. Make it brief to contain all key components."
+
+prompt = paste0(info, end)
+prompt
 
 writeLines(prompt, paste0(targetname(), ".Rout.txt"))

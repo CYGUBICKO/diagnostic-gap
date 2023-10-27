@@ -14,6 +14,9 @@ ols_train <- train(model_form
 	, trControl = training_control
 )
 print(ols_train)
+model_name_ = ifelse(problem_type=="classification", "logistic", "linear")
+ols_train$model_name_ = model_name_
+
 
 saveVars(ols_train
 	, train_df
@@ -21,4 +24,5 @@ saveVars(ols_train
 	, outcome_var
 	, report_metric
 	, problem_type
+	, preprocess_steps
 )

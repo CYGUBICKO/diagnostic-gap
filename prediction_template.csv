@@ -1,2 +1,2 @@
 sex,age,pacemaker,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,perfusion,slope,ca,thal,smoker,drug,traponin,famhist,class
-1,60,NO,4,130,253,0,0,144,1,1.4,1.72729255642999,1,1,7,1,Aspirin,-172.729255642999,yes,Yes
+0,50,NO,3,140,288,0,0,140,1,0,0.735893907002187,2,0,7,0,Both,-73.5893907002187,yes,Yes

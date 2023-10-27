@@ -11,5 +11,8 @@ best_df <- (metric_df
 	%>% select(-.n)
 )
 print(best_df)
+preprocess_steps$best_model = paste0("Out of all trained models, the top ", top_n, " best performing models were: ", paste0(best_df$model_score, collapse=", "), ".")
 
-saveVars(best_df)
+saveVars(best_df
+	, preprocess_steps
+)

@@ -46,6 +46,7 @@ if (length(ses_vars)) {
 		, na_codes
 		, preprocessFun
 		, seqx
+		, project_description
 	)
 } else {
 	saveVars(df
@@ -64,5 +65,6 @@ if (length(ses_vars)) {
 		, na_codes
 		, preprocessFun
 		, seqx
+		, project_description
 	)
 }

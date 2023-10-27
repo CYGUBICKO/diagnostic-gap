@@ -36,4 +36,5 @@ saveVars(default_params
 	, na_codes
 	, preprocessFun
 	, seqx
+	, preprocess_steps
 )
