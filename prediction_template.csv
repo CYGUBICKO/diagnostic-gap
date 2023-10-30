@@ -1,2 +1,2 @@
 sex,age,pacemaker,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,perfusion,slope,ca,thal,smoker,drug,traponin,famhist,class
-0,50,NO,3,140,288,0,0,140,1,0,0.735893907002187,2,0,7,0,Both,-73.5893907002187,yes,Yes
+1,65,NO,4,136,248,0,0,140,1,4,1.37937059272011,3,0,7,0,Clopidogrel,-137.937059272011,yes,Yes
