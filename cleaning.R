@@ -107,6 +107,8 @@ if (length(vars_droped)) {
 #### Create prediction template
 readr::write_csv(sample_n(df, 1), file="prediction_template.csv")
 
+project_description$project_description = project_description
+project_description$data_dim = paste0("The datasets contained ", NROW(df), " and ", NCOL(df), " variables.")
 
 saveVars(df
 	, model_params

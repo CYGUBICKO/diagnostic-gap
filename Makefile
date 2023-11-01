@@ -187,14 +187,15 @@ prediction.Rout: prediction.R $(prediction_template) $(trained_models)
 outputs += prediction.Rout.csv
 
 #### Gather results for the GAI
-results_forgai.Rout: results_forgai.R varimp_plots.rda
+results_forgai.Rout: results_forgai.R varimp_plots.rda 
 
 ######################################################################
 
 ## Reports
 ### Use Google GAI to draft a manuscript based on the results
+plots += metric_plots.Rout.pdf
 generate_report.Pyout: generate_report.py results_forgai.Rout
-draft_report.pdf: draft_report.Rmd generate_report.Pyout
+draft_report.pdf: draft_report.Rmd generate_report.Pyout $(plots)
 	$(knitpdf)
 
 cp_op: $(outputs)

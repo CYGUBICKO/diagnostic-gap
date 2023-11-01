@@ -2,3 +2,12 @@
 cat(readLines('generate_report.Pyout'), sep = '\n')
 ```
 
+\clearpage
+
+## Performance of the machine learning models
+
+\begin{center}
+\begin{figure}
+\includegraphics{{metric_plots.Rout.pdf}}\caption{A comparison of model performance metrics (y-axis). The scores are based on 200 bootstrapped re-samples of the test data. Models with higher scores and narrower confidence intervals are better performers.}
+\end{figure}
+\end{center}

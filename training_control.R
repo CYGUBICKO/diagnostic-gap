@@ -13,7 +13,8 @@ train_df = train_recipe$df_processed
 test_df = test_recipe$df_processed
 preprocess_steps = train_recipe$preprocess_steps
 preprocess_steps$removed_vars = NULL
-preprocess_steps$project_description = project_description
+preprocess_steps$project_description = project_description$project_description
+preprocess_steps$data_dim = project_description$data_dim
 preprocess_steps$train_test_ratio = paste0(scales::percent(train_test_ratio), " of the data was used as training data while the rest as test data.")
 
 training_control <- trainControl(method = model_params$cv_method
@@ -30,7 +31,6 @@ preprocess_steps$cv_repeats = paste0(model_params$cv_repeats, " repeats during c
 preprocess_steps$cv_search = paste0(model_params$cv_search, " parameter search was used to determine hyperparameters.")
 preprocess_steps$metrics = paste0(performance_metric, " was used as a performance metric during cross-validation while ", report_metric, " was used to compared the performance of models and choose the best performing one.")
 
-preprocess_steps
 saveVars(training_control
 	, problem_type
 	, performance_metric
