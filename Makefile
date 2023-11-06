@@ -64,11 +64,11 @@ data_processing_file = data_processing_file.xlsx
 load_data.Rout: load_data.R $(data_processing_file) helperfuns.rda
 
 ### Create project directory
-project_name = $(shell Rscript -e "cat(readxl::read_excel(\"$(data_processing_file)\", sheet=\"model_params\")[[\"project_name\"]])")
+project_name = $(shell Rscript -e "cat(paste0(\"output_\", readxl::read_excel(\"$(data_processing_file)\", sheet=\"model_params\")[[\"project_name\"]]))")
 
 Ignore += create_project_dir.out
 create_project_dir.out: $(data_processing_file)
-	(mkdir output_$(project_name) 2>/dev/null) || (echo "project directory alreach exists")
+	(mkdir $(project_name) 2>/dev/null) || (echo "project directory alreach exists")
 	touch $@
 
 ### Data cleaning
@@ -193,10 +193,10 @@ results_forgai.Rout: results_forgai.R varimp_plots.rda
 
 ## Reports
 ### Use Google GAI to draft a manuscript based on the results
-plots += metric_plots.Rout.pdf
 generate_report.Pyout: generate_report.py results_forgai.Rout
-draft_report.pdf: draft_report.Rmd generate_report.Pyout $(plots)
+draft_report.pdf: draft_report.Rmd generate_report.Pyout $(outputs)
 	$(knitpdf)
+outputs += draft_report.pdf
 
 cp_op: $(outputs)
 	$(MAKE) $^ && cp -r $^ $(project_name)

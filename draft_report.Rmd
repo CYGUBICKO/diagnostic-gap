@@ -6,8 +6,39 @@ cat(readLines('generate_report.Pyout'), sep = '\n')
 
 ## Performance of the machine learning models
 
+### Summary metric
 \begin{center}
 \begin{figure}
 \includegraphics{{metric_plots.Rout.pdf}}\caption{A comparison of model performance metrics (y-axis). The scores are based on 200 bootstrapped re-samples of the test data. Models with higher scores and narrower confidence intervals are better performers.}
 \end{figure}
 \end{center}
+
+\clearpage
+### ROC
+
+\begin{center}
+\begin{figure}
+\includegraphics{{roc_plots.Rout.pdf}}\caption{A comparison of model performance based on ROC.}
+\end{figure}
+\end{center}
+
+\clearpage
+## Variable importance plot
+
+### Based on top 2 models
+
+\begin{center}
+\begin{figure}
+\includegraphics{{varimp_plots.Rout.pdf}}\caption{Variable importance scores together with the corresponding 2.5\%, 50\% and 97.5\% quantiles, based on the top 2 models.}
+\end{figure}
+\end{center}
+
+\clearpage
+### Ranked features among all models
+
+\begin{center}
+\begin{figure}
+\includegraphics{{varimp_rank_plots.Rout.pdf}}\caption{The number of times, frequency, a given feature is ranked, on top 5, by a particular model in a given cohort as one of the most important feature. Low rank means a particular feature is predictive and hence important.}
+\end{figure}
+\end{center}
+

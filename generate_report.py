@@ -16,7 +16,7 @@ prompt = open("results_forgai.Rout.txt", 'r').read()
 completion = palm.generate_text(
     model=model,
     prompt=prompt,
-    temperature=0.2,
+    temperature=0,
     # The maximum length of the response
     max_output_tokens=100000,
 )
