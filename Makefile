@@ -150,6 +150,16 @@ mlp_hyperparameters.Rout: mlp_hyperparameters.R models_hyperparameters.rda
 mlp_train.Rout: mlp_train.R mlp_hyperparameters.rda
 trained_models += mlp_train.rda
 
+### Naive bayes model
+nb_hyperparameters.Rout: nb_hyperparameters.R models_hyperparameters.rda
+nb_train.Rout: nb_train.R nb_hyperparameters.rda
+trained_models += nb_train.rda
+
+### Decision trees model
+dt_hyperparameters.Rout: dt_hyperparameters.R models_hyperparameters.rda
+dt_train.Rout: dt_train.R dt_hyperparameters.rda
+trained_models += dt_train.rda
+
 ######################################################################
 
 ## Predictive performance

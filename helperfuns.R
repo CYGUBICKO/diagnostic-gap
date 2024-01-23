@@ -75,7 +75,7 @@ get_file_ext = function(file) {
 	(strsplit(basename(file), split="\\.(?=[^\\.]+$)", perl = TRUE)[[1]])[2]
 }
 
-preprocessFun <- function(df, model_form, corr, handle_missing) {
+preprocessFun <- function(df, model_form, corr, handle_missing, exclude=NULL) {
 	df_out = recipe(model_form, data=df)
 	preprocess_result = list()
 	if (anyNA.data.frame(df)) {
@@ -130,13 +130,27 @@ preprocessFun <- function(df, model_form, corr, handle_missing) {
 	df_out = (df_out
 		%>% step_center(all_numeric_predictors())
 		%>% step_scale(all_numeric_predictors())
-		%>% step_nzv(all_predictors())
 	)
+	if (is.null(exclude)) {
+		df_out = (df_out
+			%>% step_nzv(all_predictors())
+		)
+	} else {
+		df_out = (df_out
+			%>% step_nzv(all_predictors(), -all_of(exclude))
+		)
+	}
 	preprocess_result$handle_predictors = c("All numeric variables were centered and scaled and variables with near zero variance removed.")
 	if (corr > 0) {
-		df_out = (df_out
-			%>% step_corr(all_predictors(), threshold=corr)
-		)
+		if (is.null(exclude)) {
+			df_out = (df_out
+				%>% step_corr(all_predictors(), threshold=corr)
+			)
+		} else {
+			df_out = (df_out
+				%>% step_corr(all_predictors(), -all_of(exclude), threshold=corr)
+			)
+		}
 		preprocess_result$correlated_predictors = paste0("One of the variables which had a bivariate correlation of at least ", corr, " were droped.")
 	}
 	df_out = (df_out
@@ -144,8 +158,8 @@ preprocessFun <- function(df, model_form, corr, handle_missing) {
 		%>% bake(new_data=NULL)
 	)
 	removed_vars = colnames(df)[!colnames(df) %in% colnames(df_out)]
-	preprocess_result$n_removed_vars = ifelse(length(removed_vars), paste0(length(removed_vars), " variabels were removed after preprocessing."), NULL) 
-	preprocess_result$removed_vars = ifelse(length(removed_vars), paste0(removed_vars, collapse=","), NULL) 
+	preprocess_result$n_removed_vars = if(length(removed_vars)) paste0(length(removed_vars), " variabels were removed after preprocessing.") else  NULL 
+	preprocess_result$removed_vars = if(length(removed_vars)) paste0(removed_vars, collapse=",") else NULL
 	preprocess_result$predictors_for_analysis = paste0(outcome_var, " was used as an outcome variable, while the following were used as predictors: ", paste0(colnames(df_out)[!colnames(df_out) %in% outcome_var], collapse=", "), ".")
 	return(list(df_processed=df_out, df_original=df, preprocess_steps=preprocess_result))
 }

@@ -12,7 +12,7 @@ corr_threshold = model_params$corr_threshold
 handle_missing = model_params$handle_missing
 
 train_recipe = preprocessFun(df = train_df, model_form = model_form, corr = corr_threshold, handle_missing=handle_missing)
-test_recipe = preprocessFun(df = test_df, model_form = model_form, corr = corr_threshold, handle_missing=handle_missing)
+test_recipe = preprocessFun(df = test_df, model_form = model_form, corr = corr_threshold, handle_missing=handle_missing, exclude=colnames(train_recipe$df_processed))
 
 saveVars(train_recipe
 	, test_recipe
