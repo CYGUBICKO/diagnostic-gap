@@ -30,7 +30,7 @@ if (problem_type=="classification") {
 			, y = "True positive rate"
 			, colour = "Model"
 		)
-		+ theme(legend.position="right")
+	+ theme(legend.position="right")
 	)
 	print(roc_plot)
 	csvSave(roc_df)

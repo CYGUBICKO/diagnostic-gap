@@ -144,11 +144,11 @@ preprocessFun <- function(df, model_form, corr, handle_missing, exclude=NULL) {
 	if (corr > 0) {
 		if (is.null(exclude)) {
 			df_out = (df_out
-				%>% step_corr(all_predictors(), threshold=corr)
+				%>% step_corr(all_numeric_predictors(), threshold=corr)
 			)
 		} else {
 			df_out = (df_out
-				%>% step_corr(all_predictors(), -all_of(exclude), threshold=corr)
+				%>% step_corr(all_numeric_predictors(), -all_of(exclude), threshold=corr)
 			)
 		}
 		preprocess_result$correlated_predictors = paste0("One of the variables which had a bivariate correlation of at least ", corr, " were droped.")

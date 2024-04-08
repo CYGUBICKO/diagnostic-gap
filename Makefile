@@ -1,4 +1,4 @@
-## Iganga study analysis
+## AutoML pipeline
 
 ## https://github.com/CYGUBICKO/idair-compare
 
@@ -209,7 +209,7 @@ draft_report.pdf: draft_report.Rmd generate_report.Pyout $(outputs)
 outputs += draft_report.pdf
 
 cp_op: $(outputs)
-	$(MAKE) $^ && cp -r $^ $(project_name)
+	$(MAKE) $^ && cp -rf $^ $(project_name)
 
 ######################################################################
 

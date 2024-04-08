@@ -1,2 +1,2 @@
-sex,age,pacemaker,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,perfusion,slope,ca,thal,smoker,drug,traponin,famhist,class
-1,64,NO,4,128,263,0,0,105,1,0.2,1.15910826242284,2,1,7,1,Clopidogrel,-115.910826242284,no,No
+q3p1a,q3p1b,q3p4a,q3p4b,q3p5a,q3p5b,q3p7,q3p8,q3p9,q3p10,q3p11,q3p12,q3p13,q3p15,q3p16,q3p19,q3p20,q3p22,q3p24,q3p25,q3p26,site,diaggap,sex,educ,marital,employ,typeep,age_category
+1,1,0,1,1,1,0,1,0,1,0,1,0,0,0,0,1,1,0,0,0,0,Yes,1,<prim/no formal,Never married,Not employed,1,13-18

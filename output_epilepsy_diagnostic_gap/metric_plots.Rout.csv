@@ -1,0 +1,12 @@
+lower,estimate,upper,metric,model,model_score
+0.789,0.878,0.939,AUCROC,Decision trees,"Decision trees with AUCROC score of 0.878[0.789, 0.939]"
+0.862,0.914,0.957,AUCROC,Elastic net,"Elastic net with AUCROC score of 0.914[0.862, 0.957]"
+0.867,0.916,0.959,AUCROC,Gradient boosting,"Gradient boosting with AUCROC score of 0.916[0.867, 0.959]"
+0.853,0.911,0.954,AUCROC,Lasso,"Lasso with AUCROC score of 0.911[0.853, 0.954]"
+0.81,0.876,0.933,AUCROC,Multi-layer neural network,"Multi-layer neural network with AUCROC score of 0.876[0.81, 0.933]"
+0.869,0.932,0.975,AUCROC,Naive bayes,"Naive bayes with AUCROC score of 0.932[0.869, 0.975]"
+0.834,0.897,0.953,AUCROC,logistic,"logistic with AUCROC score of 0.897[0.834, 0.953]"
+0.837,0.915,0.964,AUCROC,Random forest,"Random forest with AUCROC score of 0.915[0.837, 0.964]"
+0.849,0.915,0.954,AUCROC,Ridge,"Ridge with AUCROC score of 0.915[0.849, 0.954]"
+0.824,0.893,0.951,AUCROC,Support vector machine,"Support vector machine with AUCROC score of 0.893[0.824, 0.951]"
+0.814,0.887,0.941,AUCROC,Extreem gradient boosting,"Extreem gradient boosting with AUCROC score of 0.887[0.814, 0.941]"
