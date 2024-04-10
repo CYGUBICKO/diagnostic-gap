@@ -1,12 +1,12 @@
-q3p1a,q3p1b,q3p4a,q3p4b,q3p5a,q3p5b,q3p7,q3p8,q3p9,q3p10,q3p11,q3p12,q3p13,q3p15,q3p16,q3p19,q3p20,q3p22,q3p24,q3p25,q3p26,site,diaggap,sex,educ,marital,employ,typeep,age_category,model
-1,1,0,1,1,1,0,1,0,1,0,1,0,0,0,0,1,1,0,0,0,0,Yes,1,<prim/no formal,Never married,Not employed,1,13-18,dt
-1,1,0,1,1,1,0,1,0,1,0,1,0,0,0,0,1,1,0,0,0,0,Yes,1,<prim/no formal,Never married,Not employed,1,13-18,enet
-1,1,0,1,1,1,0,1,0,1,0,1,0,0,0,0,1,1,0,0,0,0,Yes,1,<prim/no formal,Never married,Not employed,1,13-18,gbm
-1,1,0,1,1,1,0,1,0,1,0,1,0,0,0,0,1,1,0,0,0,0,Yes,1,<prim/no formal,Never married,Not employed,1,13-18,lasso
-1,1,0,1,1,1,0,1,0,1,0,1,0,0,0,0,1,1,0,0,0,0,No,1,<prim/no formal,Never married,Not employed,1,13-18,mlp
-1,1,0,1,1,1,0,1,0,1,0,1,0,0,0,0,1,1,0,0,0,0,Yes,1,<prim/no formal,Never married,Not employed,1,13-18,nb
-1,1,0,1,1,1,0,1,0,1,0,1,0,0,0,0,1,1,0,0,0,0,Yes,1,<prim/no formal,Never married,Not employed,1,13-18,ols
-1,1,0,1,1,1,0,1,0,1,0,1,0,0,0,0,1,1,0,0,0,0,Yes,1,<prim/no formal,Never married,Not employed,1,13-18,rf
-1,1,0,1,1,1,0,1,0,1,0,1,0,0,0,0,1,1,0,0,0,0,Yes,1,<prim/no formal,Never married,Not employed,1,13-18,ridge
-1,1,0,1,1,1,0,1,0,1,0,1,0,0,0,0,1,1,0,0,0,0,Yes,1,<prim/no formal,Never married,Not employed,1,13-18,svm
-1,1,0,1,1,1,0,1,0,1,0,1,0,0,0,0,1,1,0,0,0,0,Yes,1,<prim/no formal,Never married,Not employed,1,13-18,xgbm
+shaking_uncontrolled_past,shaking_uncontrolled_reported,hallucinations_emotional_changes,blank_stare_amnesia_behavior,unresponsive_staring_reports,abrupt_falling_injuries,falling_pale_attacks,consciousness_loss,falling_loss_consciousness,falling_tongue_biting,falling_bladder_loss,brief_trembling_attacks,surroundings_loss_smells,ground_twitching,febrile_seizures_occurrence,single_bodypart_seizures,multiple_bodyparts_seizures,seizures_duration_30min,seizures_duration_sermon,traditional_healer_seizure_treatment,hospital_treatment_seizures_febrile,site,diagnostic_gap,sex,education_level,marital_status,employment_status,type_of_epilepsy,age_category,model
+1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,0,1,1,0,1,0,1,Yes,0,Secondary+,Married/livingwithpartner,Informal/Self employed,1,29-49,dt
+1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,0,1,1,0,1,0,1,Yes,0,Secondary+,Married/livingwithpartner,Informal/Self employed,1,29-49,enet
+1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,0,1,1,0,1,0,1,Yes,0,Secondary+,Married/livingwithpartner,Informal/Self employed,1,29-49,gbm
+1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,0,1,1,0,1,0,1,Yes,0,Secondary+,Married/livingwithpartner,Informal/Self employed,1,29-49,lasso
+1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,0,1,1,0,1,0,1,Yes,0,Secondary+,Married/livingwithpartner,Informal/Self employed,1,29-49,mlp
+1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,0,1,1,0,1,0,1,No,0,Secondary+,Married/livingwithpartner,Informal/Self employed,1,29-49,nb
+1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,0,1,1,0,1,0,1,Yes,0,Secondary+,Married/livingwithpartner,Informal/Self employed,1,29-49,ols
+1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,0,1,1,0,1,0,1,Yes,0,Secondary+,Married/livingwithpartner,Informal/Self employed,1,29-49,rf
+1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,0,1,1,0,1,0,1,Yes,0,Secondary+,Married/livingwithpartner,Informal/Self employed,1,29-49,ridge
+1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,0,1,1,0,1,0,1,Yes,0,Secondary+,Married/livingwithpartner,Informal/Self employed,1,29-49,svm
+1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,0,1,1,0,1,0,1,Yes,0,Secondary+,Married/livingwithpartner,Informal/Self employed,1,29-49,xgbm
